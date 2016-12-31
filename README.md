@@ -1,30 +1,11 @@
-## Welcome to GitHub Pages
+## 欢迎浏览小明的学习笔记
+这个项目记录自己学习所用的思维导图，用的软件是Mindjet Manager.文件有mmap原文件格式,其他均为导出文件格式
 
-You can use the [editor on GitHub](https://github.com/DearlingZou8789/xm_learning_program/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+### 学习记录列表
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+这些是近期学习时添加的内容
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
+1.[iOS性能优化](./性能优化(ibreme)/IOS性能优化(ibreme).html)([ibreme](http://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/))-2016-12-31
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
