@@ -5,7 +5,7 @@
 
 这些是近期学习时添加的内容
 
-1.[iOS性能优化](./性能优化(ibreme)/IOS性能优化(ibreme).html)([ibreme](http://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/))-2016-12-31
+1.[iOS性能优化](性能优化(ibreme)/IOS性能优化(ibreme).html)([ibreme](http://blog.ibireme.com/2015/11/12/smooth_user_interfaces_for_ios/))-2016-12-31
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
