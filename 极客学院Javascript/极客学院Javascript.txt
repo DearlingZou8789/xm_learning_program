@@ -1,0 +1,538 @@
+﻿Javascript
+
+基础
+
+简介，实现，输出
+
+<script>...</script> 
+防止在 <head> 标签内 
+ 
+document.write("Javascript 学习 "); 
+
+
+语法和注释
+
+1.以 ; 结尾 
+ 
+2.按照顺序依次执行 
+ 
+3.标识符： 
+     javascript标识符必须以字母、下划线或美元符号开始 
+     javascript关键字不能使用 
+ 
+4.javascript对大小写敏感 
+ 
+5.多空格无影响 
+ 
+6.保留字 
+     abstract 
+boolean 
+byte 
+char 
+class 
+const 
+debugger 
+double 
+enum 
+export 
+extends 
+final 
+float 
+goto 
+implements 
+import 
+int 
+interface 
+long 
+native 
+package 
+private 
+protected 
+public 
+short 
+static 
+super 
+synchronized 
+throws 
+transient 
+ 
+ 
+7. 关键字 
+break 
+case 
+catch 
+continue 
+default 
+delete 
+do 
+else 
+finally 
+for 
+function 
+if 
+in 
+instanceof 
+new 
+return 
+switch 
+this 
+throw 
+try 
+typeof 
+var 
+void 
+while 
+with 
+ 
+8.注释 
+     单行注释:     // 
+     多行注释:/*...*/ 
+
+
+变量和数据类型
+
+1.变量关键字var,和swift一样，但swift的let用于常量，var用于变量 
+     var a=10; 
+ 
+2.javascript的数据类型 
+     字符串(String), 
+     数字(Number), 
+     布尔(Boolean), 
+     数组(Array),     //数组跟OC一样，可以放多种数据类型，但swift不能，只能放置一种类型 
+     对象(Object), 
+     空(null) 
+     未定义 
+     可以通过赋值为null的方式清除变量 
+
+
+语法详解
+
+运算符
+
+与OC一样， 
++,-,*,%,/,+=,-=, 
+>,<,>=,<=,!= 
+==, 
+===,     //绝对 
+例：var i = "10"; 
+     var j = 10; 
+     i===j, false 
+     i==j, true 
+!==, 
+&&,||,! 
+ 
+a>b?a:b; 
+
+
+长期
+
+如何完成
+
+短期
+
+如何完成
+
+条件语句if...else/switch
+
+for循环/while
+
+break/continue/return
+
+break     // 跳出循环 
+continue     // 结束本次循环，进行下次循环 
+return     //返回值或空 
+
+
+函数
+
+定义
+
+1.函数是由事件驱动的或者当它被调用时执行的可重复使用的代码块 
+ 
+2. 声明 
+function 函数名 ( 参数... ){ 
+     函数体 ;( 代码块 ) 
+} 
+ 
+3. 调用 
+     在<script>标签内调用 
+     在HTML文件中调用 
+ 
+
+
+调用
+
+带参数的函数
+
+待返回值的函数
+
+局部变量和全局变量
+
+函数内部变量属于局部变量 
+ 
+全局变量：声明在函数之外，可以全局使用 
+     另外在函数内部声明x = 10;在函数调用之后x变成全局变量，可以在之后使用 
+
+
+异常处理和事件处理
+
+异常捕获
+
+try{  
+     发生异常的代码块 ;  
+}catch(err){  
+     错误信息处理   
+}  
+ 
+ 
+throw “ 请输入 "; 
+
+
+事件处理
+
+onClick,           单击事件 
+onMouseOver, 鼠标经过事件 
+onMouseOut, 鼠标移出事件 
+onChange; 文本内容改变事件 
+onSelect,   文本框选中事件 
+onFocus,   光标聚集事件 
+onBlur,     移开光标事件。 
+onLoad,     网页加载事件 
+onUnload.  关闭网页事件 
+ 
+
+
+DOM对象
+
+简介
+
+当网页被加载时，浏览器会创建页面的文档对象模型（ Document Object Model) 
+ 
+1.DOM 操作 HTML: 
+1):Javascript 能够改变页面中的所有 HTML 元素 
+2 ):Javascript能够改变页面中的所有HTML元素 
+3):Javascript能够改变页面中的所有CSS样式 
+4):Javascript能够对页面中的所有事件做出反应 
+
+
+DOM操作HTML
+
+1. 改变 HTML 输出流，注意在文档加载完成之后绝对不能使用 document.write() ，这回覆盖文档 
+2. 寻找元素： 
+     通过 id 找到 HTML 元素。 
+     通过标签名找到 HTML 元素。 
+3. 改变 HTML 内容： 
+     使用innerHTML 
+     innerHTML = "100” ； 
+4. 改变 HTML 属性： 
+     使用 attributed 
+     a 属性 href 
+     img 属性 src 均可修改 
+
+
+DOM操作CSS
+
+1. 通过 DOM 对象改变CSS： 
+     语法：document.getElementByID(id).style.property=new style; 
+     其中property为其属性名 
+
+
+DOM EventListener
+
+1.DOM EventListener: 
+     方法： addEventListener(); 
+            removeEventListener(); 
+ 
+2.addEventListener( 参数 1 ， 参数 2); 
+     添加事件接收者 
+     参数 1 ：事件名， click,mouseOver,mouseOut,dbClick 
+     参数 2:  方法调用名 
+ 
+3.removeEventListener(); 
+     删除事件接收者 
+     参数 1 ：事件名， click,mouseOver,mouseOut,dbClick 
+     参数 2:  方法调用名 
+
+
+事件流
+
+描述
+
+1. 事件流： 
+     描述的是在页面中接受事件的顺序； 
+2. 事件冒泡： 
+     由最具体的元素接收，然后逐级向上传播至最不具体的元素的节点（文档） 
+3.事件捕获： 
+    最不具体的节点先接收事件，而最具体的节点应该是最后接收事件 
+ 
+什么时候是事件冒泡，什么时候是事件捕获 
+
+
+事件处理
+
+1.HTML 事件处理： 
+     直接添加到 HTML 结构中 
+2.DOM0 级事件处理： 
+     把一个函数赋值给一个事件处理程序属性 
+3.DOM2 级事件处理： 
+     addEventListener(" 事件名", "事件处理方法"); 
+     true:事件捕获 
+     false：事件冒泡 
+     removeEventListener(); 
+4.IE事件处理程序： 
+     attachEvent 
+     detachEvent 
+
+
+事件对象
+
+1. 事件对象： 
+     在触发DOM事件的时候都会产生一个对象 
+2.事件对象Event: 
+    1).type:    获取事件类型click 
+    2).target:获取事件目标object HTMLButtonElement 
+    3).stopPropagation():阻止事件冒泡 ，即由当前具体元素往上传到body 
+    4).preventDefault():阻止事件默认行为 
+
+
+js内置对象
+
+1.javascript 中的所有事物都是对象：字符串、数值，数组，函数。。。 
+每个对象带有属性和方法。 
+javascript允许自定义对象 
+2.自定义对象： 
+1）.定义并创建对象实例 
+2）.使用函数来定义对象 ，然后创建新的对象实例 
+ 
+ 
+    < script > //        第一种直接创建一个实例 , 好牛逼啊 !Object 就是类 , 而直接设置 name 和 age 属性相当于 OC 中的 runtime 运行时赋值  //        people = new Object(); //        people.name = "john"; //        people.age = "18"; //        document.write("name:"+people.name+",age:"+people.age);  //    第二种使用 OC 中的 NSDictionary 进行创建 , 这个很特别 , 我倒觉得就是个 OC 的 NSDictionary 对象 . //        people = {name:"john", age:"38"}; //        document.write("name:"+people.name+",age:"+people.age);  //      第三种使用函数 , 特别需要注意的地方使用 this, 其实这个就是类的声明          function people (name, age) {             this . name = name;             this . age = age;         }         son = new people ( "john" , "38" );         document . write ( "name:" + son . name + ",age:" + son . age );     </ script > 
+
+
+string字符串
+
+和 OC 一样， 
+属性： 
+length     长度 
+prototype 
+constructor 
+ 
+方法： 
+charAt()     //指定位置的字符 
+charCodeAt()     //指定位置的字符所对应的ASCII编码 
+concat()     //将新加入的字符串添加到后面 
+fromCharCode()     //从给定ASCII编码中获取字符串 
+lastIndexOf()     //从后面起找到该字符的索引位置 
+search()     //搜索 
+slice()     //切片 
+substring()     //截取字符串，从start到end位置 
+substr()     //截取字符串，从start开始后面length的字符串 
+valueOf()     //返回关键的字符串 
+indexOf     // 找到searchString的索引位置 
+match()     //匹配内容 
+replace()     //替换内容 
+toUpperCase()/toLowerCase()     //大小写替换 
+split()     //字符串转换成数组 
+
+
+Date日期对象
+
+var date = new Date(); 
+
+
+Array数组对象
+
+1.Array 对象： 
+     使用单独的变量名来存储一系列的值 
+2. 数组的创建： 
+     var myArray = ["hello", "wen", "john"]; 
+3. 数组的访问： 
+     通过指定数组名以及索引号码，你可以访问某个特定的元素。 
+4.数组的常用方法: 
+     concat(),          //合并数组 
+     sort(),          //排序 
+     push();          //末尾追加元素 
+     reverse();          //数组元素翻转 
+
+
+Math对象
+
+数学方法对象 
+
+
+DOM对象控制HTML详解
+
+DOM对象控制HTML
+
+1. 方法： 
+     getElementByName()     // 获取 name 
+     getElementsByTagName()     // 获取元素 
+     getAttribute()               //获取元素属性 
+     setAttribute()               //设置元素属性 
+     childNodes()               //访问子节点 
+     parentNode()               //访问父节点 
+     createElement()          //创建元素节点 
+     createTextNode()          //创建文本节点 
+     appendChild()               //往后插入节点 
+     insertBefore()               //插入节点 
+     removeChild()               //删除节点 
+     offsetHeight               //网页尺寸<不包括金重复 
+     scrollHeight               //网页尺寸（包含滚动条） 
+2 
+
+
+浏览器对象
+
+window对象
+
+1.window 对象： 
+     window 对象是 BOM 的核心， window 对象指当前的浏览器窗口。 
+     所有JavaScript全局对象，函数以及变量均自动成为window对象的成员， 
+     全局变量是window对象的属性。 
+     全局函数是window对象的方法。 
+     甚至HTML DOM的document也是window对象的属性之一。 
+ 
+2.window尺寸： 
+     window.innerHeight-浏览器窗口的内部高度 
+     window.innerWidth-浏览器窗口的内部宽度 
+ 
+3.window方法: 
+     window.open()          //打开窗口 
+     window.close()          //关闭窗口 
+
+
+计时器
+
+1. 计时事件： 
+     通过使用 Javascript, 我们有能力做到在一个设定的时间间隔之后来执行代码，而不是在函数被调用后立即执行，我们称之为计时事件。 
+ 
+2.计时方法： 
+     1）,setInterval()-间隔指定的毫秒数不停地执行指定的代码，这是延迟调用，不需要特别强调调用自己。 
+     clearInterval()方法用于停止setInterval()方法执行的函数代码 
+ 
+     2）：setTimeout()-暂停指定的毫秒数后执行指定的代码，需要调用方法自己 
+     clearTimeout()方法用于停止执行setTimeout()方法的函数代码 
+
+
+History对象
+
+1.History 对象 : 
+     window.history 对象包含浏览器的历史 (url) 的集合。 
+2.History 方法 : 
+     history.back()     // 与在浏览器点击后退按钮相同 
+     history.forward()     //与在浏览器中点击向前按钮一致 
+     history.go()     //进入历史中的某个页面 
+
+
+Location对象
+
+1.Location 对象： 
+     window.location 对象用于获得当前页面的地址（ URL ），并把浏览器重定向到新的页面。 
+2.Location对象的属性: 
+     location.hostname返回web主机的域名。 
+     location.pathname返回当前页面的路径和文件名 
+     location.port返回web主机的端口 
+     location.protocol返回所使用的web协议(http://或https://) 
+     location.href属性返回当前页面的URL 
+     location.assign()方法加载新的文档 ,重定向，当前页面重定向到某个URL上面  
+
+
+Screen对象
+
+1.Screen 对象： 
+     window.screen 对象包含有关用户屏幕的信息 
+2. 属性： 
+     screen.availWidth     // 可用的屏幕宽度 
+     screen.availHeight     //可用的屏幕宽度 
+     screen.Height     //屏幕高度 
+     screen.Width     //屏幕宽度 
+ 
+直接用screen就可以了 
+
+
+面向对象
+
+认识面向对象
+
+ES5 标准 
+ 
+1. 面向对象中的概念：   
+    1 ） : 一切事物皆对象   
+    2 ） : 对象具有封装和继承特性   
+    3) ：信息隐藏   
+ 
+1）直接设置对象   
+// var person={ //     name:"john", //     age:30, //     eat:function () { //         alert(" 吃饭 "); //     } // } // // alert(person.eat());   
+ 
+2 ）对象的封装和继承   
+//  函数构造对象  function Person () {  }  Person . prototype = {     name : "john" ,     age : 30 ,     eat : function () {         alert ( " 我在吃饭 " );     } }   
+ 
+// function Student(name) { //     this._name = name; // } // //  继承 People // Student.prototype = new People(); // var superSay = Student.prototype.say; // Student.prototype.say = function () { //     superSay.call(this); //     alert("stu-hello" + this._name); // } // // var s = new Student("zmj"); // s.say();   
+ 
+3. 信息的隐藏   
+ 
+/**   * Created by zmj27404 on 9/8/16.   */ //1. 基类 Person ( function () {     var n = "John" ;     function Person (name) {         var _this = {};         _this . _name = name;         _this . sayHello = function () {             console . log ( "Hello " + _this . _name );         }         return _this ;     }     window . Person = Person ; }());  //2. 继承 Person ( function () {     function Teacher (name) {         // Person 得加 (), 表示对象          var _this = Person (name);         var superSay = _this . sayHello ;         _this . sayHello = function () {             // superSay();              // 老师用一下 : 其实两个效果是一样的              superSay . call ( _this );             console . log ( "Hello Teacher " + _this . _name );         }         return _this ;     }     window . Teacher = Teacher ; }()); var t = Teacher ( "John" ); t . sayHello ();   
+ 
+ 
+ 
+
+
+js瀑布流
+
+ES6标准
+
+ECMA Script 是 JavaScript 的规格，而 JavaScript 则是 ECMA Script 的具体实现 
+ 
+可以使用 Babel 工具将 ES6 转换成 ES5 ， 
+目前电脑上的浏览器 Chrome,Firfox, Safari, Opera 均可执行 ES6 标准的 javascript 文件 
+ 
+# 1. Create a demo project folder 
+mkdir LearnBabel 
+# 2. Get into it 
+cd LearnBabel 
+# 3. Create a default configuration of npm 
+echo {} > package. json 
+# 4. Install Babel by npm and save dependencies into package.json 
+npm install --save-dev babel-cli 
+ 
+在 package.json 中添加如下配置: 
+{ 
+    "scripts" : { 
+        "build" : "babel source -d output" 
+    }, 
+  "devDependencies" : { 
+    "babel-cli" : "^6.14.0" 
+  } 
+} 
+ 
+Babel6.0 以后默认不带有转换的功能。 
+执行npm install babel-preset-es2015 --save-dev 
+并在项目根目录创建一个.babelrc文件，输入 
+{ 
+     "presets":["es2015"] 
+} 
+ 
+现在执行nam run build生成ES5标准的js文件 
+ 
+Variable hoisting 
+function fireEvent ( isFire ) { 
+    var message; 
+ 
+    if (isFire) { 
+        message = "Demo event" 
+        console .log(message) 
+    } 
+    else { 
+        console .log(message) 
+    } 
+} 
+ES6以前,JavaScript只有两种作用域，既全局作用域（global scope)和函数作用域(function scope),这种情况下属于函数作用域，可以在整个函数的任何一个地方使用，只不过，当它没有初始化的时候，值是undefined 
+ 
+ES6引入块级作用域(block) 
+就是任何一个通过{}包围起来的区域。用let关键字，其实就相当于oc中正常的函数局部变量 
+ 
+const：修改变量不能修改，但如果是数组可以增加，删除元素。其实就是修饰指针，指针所指的位置不能改改，数组中的元素可以修改； 
+ 
+var,let和const的最佳实践: 
+1.默认全部变量使用let; 
+2.对于绝对不会被重新赋值的变量使用const； 
+3.对于var，通常我们可能只会用它去定义一些项目中每个模块都会使用的全局对象。甚至这些对象也完全可以使用let来定义。总之，我们应该不太会用到var就 👌 了。 

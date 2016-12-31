@@ -1,0 +1,513 @@
+﻿CSS3样式
+
+基础知识
+
+派生选择器
+
+通过依据元素在其位置的上下文关系来定义,如: 
+li strong{ 
+     color:rebeccapurple; 
+} 
+
+
+id选择器
+
+class类选择器
+
+属性选择器
+
+[title]{ 
+     color: red; 
+} 
+
+
+基本样式讲解
+
+背景
+
+background-image
+
+body{ 
+     
+
+
+background-color
+
+background-position
+
+background-repeat
+
+background-attachment
+
+背景图像是否固定或者随着页面的其余部分滚动 
+
+
+background-size
+
+background-origin
+
+规定背景图片的定位区域 
+
+
+background-clip
+
+规定背景的绘制区域 
+ 
+border-box: 绘制图形以外边界为线 
+padding-box: 绘制图形以内边界为线 
+content-box: 以内容为边界 
+
+
+css文本
+
+color
+
+direction
+
+line-height
+
+letter-spacing
+
+字符间距 
+
+
+text-align
+
+text-decoration
+
+向文本添加修饰 
+
+
+text-indent
+
+text-transform
+
+元素中的字母 
+对文本进行首字母大写，小写等操作 
+
+
+unicode-bidi
+
+设置文本方向 
+
+
+white-space
+
+元素中空白的处理方式 
+
+
+word-spacing
+
+字间距 
+
+
+word-wrap
+
+自动换行 
+
+
+text-shadow
+
+文本阴影 
+
+
+css字体
+
+@font-face {     font-family: myfont ;     src:  "1.font" ; } 
+导入本地的字体库 
+
+
+font-size
+
+font-family
+
+css超链接
+
+text-decoration: none ; 
+可以设置超链接的下划线为空 
+
+
+a:link
+
+普通，未被访问的链接 
+
+
+a:visited
+
+用户已访问的链接 
+
+
+a:hover
+
+鼠标指针位于链接的上方 
+
+
+a:active
+
+链接点击的时刻 
+
+
+css列表
+
+list-style
+
+简写列表项 
+
+
+list-style-image
+
+列表项图像 
+
+
+list-style-position
+
+列表标志位置 
+
+
+list-style-type
+
+列表类型 
+
+
+css表格
+
+表格边框
+
+折叠边框(collapse)
+
+表格边距(padding)
+
+css轮廓
+
+outline
+
+设置轮廓属性，颜色，样式，宽度 
+可以设置多个属性，颜色，样式，宽度 
+
+
+outline-color
+
+outline-style
+
+outline-width
+
+css盒子模型
+
+padding内边距
+
+padding-bottom, 底部 
+padding-left, 左边 
+padding-right, 右边 
+padding-top 顶部 
+
+
+border边框
+
+border-style: 定义 10 中不同的非继承样式， none 
+ 
+border-top-style, 
+border-bottom-style, 
+border-left-style, 
+border-right-style 
+ 
+border-width: 宽度 
+border-top-width, 
+border-bottom-width, 
+border-left-width, 
+border-right-width, 
+ 
+border-color:颜色 
+border-top-color, 
+border-bottom-color, 
+border-left-color, 
+border-right-color, 
+ 
+CSS3边框： 
+border-radius:圆角边框 
+box-shadow:边框阴影 
+border-image:边框图片 
+
+
+margin外边距
+
+margin 外边距 
+margin-top, 
+margin-bottom, 
+margin-left, 
+margin-right 
+
+
+margin外边距合并
+
+两个 div 之间的外边距，取最大的外边距值 
+
+
+div+css实践
+
+<img> 属性 srcset 作为备用图片替换选择器 
+
+
+css定位
+
+改变元素在页面上的位置 
+ 
+css 定位机制： 
+普通流：元素按照其在HTML中的位置顺序决定排布的过程 
+
+
+普通流
+
+position, 
+top, 
+left, 
+right, 
+bottom, 
+overflow, 设置元素溢出其区域发生的事情 
+clip, 设置元素显示的形状 
+vertical-align: 设置元素垂直对齐方式 
+z-index: 设置元素的堆叠顺序 
+
+
+position
+
+四个属性： 
+static,          静态位置 
+relative,     相对位置，依次排序 
+absolute,     绝对，后面的对象会往前移动 
+fixed          固定位置，和absolute一致 
+
+
+left
+
+right
+
+top
+
+bottom
+
+float浮动
+
+float 属性可用的值 : 
+left: 元素向左浮动 
+right: 元素向右浮动 
+none: 元素不浮动 
+inherit: 从父级继承浮动属性 
+ 
+clear属性：取消浮动 
+left， 
+right， 
+both, 
+inherit 
+
+
+绝对布局
+
+css3选择器
+
+元素选择器
+
+元素选择器，h5的标签，如何 
+h1,a,p等等 
+
+
+选择器分组
+
+例子： 
+h1,h2{} 
+*{} 
+
+
+类选择器
+
+1. 常规使用 
+class=“ a" 
+.a{} 
+ 
+2.和元素选择器一起 
+h1.a{} 
+ 
+3.多类选择 
+.a.c{} 
+
+
+ID选择器
+
+1.ID 选择器类似于类选择器，但只能使用一次 
+2. 类选择器和 ID 选择器区别： 
+ID 只能在文档中使用一次，而类可以多次使用 
+ID 选择器不能结合使用 
+当使用 js 时候，需要用到id 
+
+
+属性选择器
+
+标签的属性选择器， 
+通过 [title]{} 
+[title=""]{}     设置特定属性值 
+
+
+后代选择器
+
+<p>this is my <strong>web <i>Python</i></strong> page</p> 
+ 
+通过p strong{}设置strong的属性 
+可以通过p i设置i的属性，可以隔代设置 
+
+
+子元素选择器
+
+1. 与后代选择器相比，子元素选择器只能选择作为某元素子元素的元素 
+h1>strong{} 
+只能一层一层去查找 
+
+
+相邻兄弟选择器
+
+可选择 紧接在另一个元素后的元素，且二者有相同元素 
+如： h1+p{} 
+<h1>CSS3 选择器 </h1> 
+<p>CSS3 选择器作为段落标签 </p> 
+
+
+css3常用操作
+
+对齐操作
+
+margin水平对齐
+
+position左右对齐
+
+尺寸操作
+
+width
+
+max-width
+
+min-width
+
+height
+
+line-height
+
+max-height
+
+min-height
+
+尺寸单位
+
+% ：百分比 
+px: 像素 
+dpi ： 
+em: 
+mm: 毫米 
+
+
+float左右对齐(浮动)
+
+分类
+
+分类操作
+
+clear
+
+设置一个元素的侧面是否允许其他的浮动元素 
+
+
+cursor
+
+规定当指向某元素之上时显示的指针类型 
+
+
+display
+
+设置是否及如何显示元素 
+可以设置横竖排放 
+
+
+float
+
+定义元素在哪个方向浮动 
+
+
+position
+
+把元素放置到一个静态的，相对的，绝对的，固定的位置 
+
+
+visibility
+
+设置元素是否可见或不可见 
+
+
+导航栏
+
+图片操作
+
+瀑布流演示
+
+CSS3动画
+
+2D，3D转换
+
+1. 通过 CSS3 转换，能够对元素进行移动，缩放，转动，拉长或拉伸转换使元素改变形状，尺寸和位置的一种效果，可以使用 2D ， 3D 来转换元素 
+ 
+2.2D 转换方法： 
+translate(),     平移 
+rotate(),         旋转 
+scale(),         缩放 
+skew(),         倾斜，变形 
+matrix(),         混合模式 
+ 
+3.3D 转换方法： 
+rotateX()         旋转 X 轴 
+rotateY()         旋转 Y 轴 
+ 
+例： 
+/** 平移 **/ /*transform: translate(100px, 100px);*/ /*-webkit-transform: translate(200px, 100px);!** safari chrome*!*/ /*-ms-transform: translate(100px, 100px); !** IE **!*/ /*-o-transform: translate(100px, 100px);  !** Opera *!*/ /*-moz-transform: translate(100px, 100px);    !**Firfox*!*/ 
+ 
+
+
+过渡效果
+
+1. 通过使用 CSS3, 给元素添加一些效果 
+2.CSS3 过度是元素从一种样式转换成另一种样式 
+     动画效果的CSS 
+     动画执行的时间 
+3.属性： 
+transition:          //过度属性，和iOS一样 
+transition-property,     //过度名称 
+transition-duration,     //过度效果所花时间 
+transition-timing-function,     //过度效果的时间曲线 
+transition-delay,     //过度效果的开始时间 
+ 
+例： 
+/** 设置过度动画 , 宽度变化 2s, 高度变化 2s, 其他转化 2s */ transition: width 2 s , height 2 s , transform 2 s ; -webkit-transition: width 2 s , height 2 s , -webkit-transform 2 s ; 
+
+
+动画
+
+1. 关键帧动画 
+@keyframes anim {     0% {background-color: red ; left: 0 px ; top: 0 px }     25% {background-color: blue ; left: 200 px ; top: 0 px }     50% {background-color: #ff00cc ; left: 200 px ; top: 200 px }     75% {background-color: #a1a69f ; left: 0 ; top: 200 px }     100% {background-color: red ; left: 0 px ; top: 0 px } } 
+ 
+不清楚的地方查看 Dash 
+不同状态时的位置及属性 
+<single-animation># 
+where  
+<single-animation> = <time> || <single-timing-function> || <time> || <single-animation-iteration-count> || <single-animation-direction> || <single-animation-fill-mode> || <single-animation-play-state> || <single-animation-name> 
+where  
+<single-timing-function> = <single-transition-timing-function>  <single-animation-iteration-count> = infinite | <number>  <single-animation-direction> = normal | reverse | alternate | alternate-reverse  <single-animation-fill-mode> = none | forwards | backwards | both  <single-animation-play-state> = running | paused  <single-animation-name> = none | IDENT 
+where  
+<single-transition-timing-function> = ease | linear | ease-in | ease-out | ease-in-out | step-start | step-end | steps(<integer> [ , [ start | end ] ] ? ) | cubic-bezier(<number> , <number> , <number> , <number> ) 
+
+
+多列
+
+在 CSS3 中，可以创建多列来对文本或者区域进行布局 
+ 
+属性 : 
+     column-count     分列数量 
+     column-gap     每一列之间的间隔距离 
+     column-rule     每一列之间的线条 
+
+
+使用多列实现瀑布流

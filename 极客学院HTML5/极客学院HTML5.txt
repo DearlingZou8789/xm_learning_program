@@ -1,0 +1,563 @@
+﻿HTML5
+
+特性简介
+
+属性和格式化
+
+h1,h2,h3,h4,h5,h6,h7,p 
+<br /> 
+<ul> 
+
+
+链接和表格
+
+<a> 
+<table> 
+<tr> 
+<th> 
+<td> 
+<thead> 
+<tfoot> 
+
+
+列表，块和布局
+
+列表
+
+<ul> 无序 
+<ol>有序 
+<li>每一行 
+
+
+块
+
+<div> 
+流行 div+css 进行布局 
+
+
+布局
+
+css 
+
+
+PHP环境搭建/表单
+
+表单
+
+<form> 
+<input type="text>文本 
+submit     提交按钮 
+button     按钮 
+select     选择 
+optiongroup     选择组 
+option     选项 
+
+
+框架/背景/实体
+
+框架
+
+现在使用 iframe, 其他框架已经在 CSS3 中的废弃 
+
+
+背景
+
+background:     设置背景颜色，图片等 
+
+
+实体
+
+body 标签 
+
+
+H5新特性
+
+音频与视频播放
+
+音频播放
+
+1.Audio( 音频 ) 
+     HTML5 提供了播放音频文件的标准 
+2.control (控制器) 
+     control属性提供添加播放，暂停和音量控件 
+3.标签: 
+     <audio>     定义声音 
+     <source>     规定多媒体资源，可以是多个 
+
+
+视频播放
+
+1.Video( 视频 )  
+     HTML5 提供了展示视频的标准   
+2.control( 控制器 )  
+     control 属性提供添加播放、暂停和音量控件   
+3. 标签   
+     <video>     定义声音   
+     <source>     规定多媒体资源，可以是多个   
+4. 属性   
+     width ，   
+     height  
+ 
+mp4/ogg:chrome,firefox,opera 均支持，   
+safari: 原生支持m3u8格式 
+一般视频都需要弄成两套mp4/ogg格式   
+支持safari使用下面代码: 
+  <source src="../meta/HelloWorldSwift.m3u8" type="application/vnd.apple.mpegurl"> 
+//疑问:   
+1.格式转换ffmpeg的使用   
+ 
+2.放大，缩小应用实例   
+< button onclick= " playVideo () " > 播放 / 暂停 </ button > < button onclick= " showLarge ( true ) " > 放大 </ button > < button onclick= " showLarge ( false ) " > 缩小 </ button > < br /> < div id= "container" style= " width: 90 %; height: 70 %; margin: 0 px auto" >     < video id= "video" width= 300 height= 200 style= " margin: 0 px auto" onclick= " playVideo () " >         //  加载多种资源 , 防止 mp4 和 ogg 格式          < source src= "../meta/2Hello%20world%20in%20RxSwift.mp4" >         您的浏览器不支持      </ video > </ div > <!--<video src="../meta/2Hello%20world%20in%20RxSwift.mp4" controls="controls"> 您的浏览器不支持 </video>-->  < script >     var video = document . getElementById ( "video" );     function playVideo () {         if ( video . paused ) {             video . play ();         }         else  {             video . pause ();         }     }      function showLarge (flag) {         if (flag) {             video . width = 800 ;             video . height = 700 ;         }         else  {             video . width = 400 ;             video . height = 300 ;         }         console . log ( "width = " + video . width + ";height =" + video . height );     } </ script >   
+ 
+需要直接设置播放器的大小<video width=XX height=XX>   
+需要支持多种格式视频使用<source>标签进行加载   
+
+
+编解码工具
+
+FFmpeg 编解码工具： 
+www.ffmpeg.org 
+ 
+ 
+浏览器支持的视频格式 : 
+chrome:mp4 
+firefox:ogg 
+ 
+ 
+ffmpeg 开源软件的使用 
+
+
+H5拖放
+
+1.HTML5 拖放 
+     拖放 (Drag 和 drop ）是 HTML5 标准的组成部分 
+2. 拖动开始 : 
+    ondragstart: 调用一个函数， drag(event), 它规定了被拖动的数据 
+3.设置拖动数据： 
+    setData(),设置被拖数据的数据类型和值 
+4.放入位置： 
+    onedragover:事件规定在何处处置转动的数据 
+5.放置： 
+    ondrop：当放置碑被拖数据时，会发生drop事件。 
+ 
+事件有 : 
+ondragstart-->ondragenter-->ondragover-->ondragleave-->ondragdrop-->ondragend-->ondragexit 
+ 
+ 
+常用来将控件从一个位置拖动到另外一个位置，想想 iOS 中的 UIPanGesture 手势， 
+将图片从一个位置拖动到另外一个位置的代码: 
+img1Div . ondragstart = function (e) {     e.dataTransfer. setData ( "imgId" , "img1" ); } 
+boxDiv . ondrop = dropImgHandler ; 
+function dropImgHandler (e) {     showObj (e.dataTransfer);     e. preventDefault ();      //     var img = document . getElementById (e.dataTransfer. getData ( "imgId" ));     e. target . appendChild ( img ); } 
+ 
+ 
+2. 文件拖动 
+window . onload = function () {     imgContainer = document . getElementById ( "imgContainer" );     msg = document . getElementById ( "msg" );     imgContainer . ondragover = function (e) { 
+     //取消系统默认的事件调用          e. preventDefault ();     } 
+     //拖动完释放调用该事件      imgContainer . ondrop = function (e) {         e. preventDefault ();          var f = e.dataTransfer. files [ 0 ];         var fileReader = new FileReader ();         fileReader . onload = function (e) {             showObj (e. target );             imgContainer . innerHTML = "<img src= \" " + fileReader . result + " \" >" ;         }         fileReader . readAsDataURL ( f );     } } 
+
+
+canvas标签
+
+创建Canvas
+
+    HTML5<canvas> 元素用于图形的绘制，通过脚本(通常是JavaScript)来完成<canvas>标签只是图形容器，您必须使用脚本来绘制图形 
+    你可以通过多种方法使用canvas绘制路径、盒、圆、字符以及添加图像 
+
+
+绘制图形
+
+canvas 元素本身是没有绘图能力的。所有的绘制工作必须在 JavaScript 内部完成。 
+ 
+/**   * Created by zmj27404 on 9/11/16.   */  var CANVAS_WIDTH = 200 , CANVAS_HEIGHT = 200 ; var mycanvas , canvascontext ; window . onload = function () {     createCanvas ();     drawRect (); }  //  创建 canvas function createCanvas () {     document . body . innerHTML = "<canvas id= \" mycanvas \" width= \" " + CANVAS_WIDTH + " \" height= \" " + CANVAS_HEIGHT + " \" ></canvas>" ;     mycanvas = document . getElementById ( "mycanvas" );     canvascontext = mycanvas . getContext ( "2d" ); }  //  图形绘制  function drawRect () {     var space = 10 ;     canvascontext . fillStyle = "green" ;     canvascontext . fillRect ( space , space , CANVAS_WIDTH - 2 * space , CANVAS_HEIGHT - 2 * space );     canvascontext . clearSide =      canvascontext . clearRect ( space * 2 , space * 2 , CANVAS_WIDTH - 4 * space , CANVAS_HEIGHT - 4 * space );     canvascontext . strokeRect ( space * 3 , space * 3 , CANVAS_WIDTH - 6 * space , CANVAS_HEIGHT - 6 * space ); } 
+ 
+绘制出来的结果 
+￼ 
+ 
+其实类似于 iOS 中的Core Graphic框架 
+ 
+ 
+ 
+
+
+绘制图片
+
+//  图片绘制  function drawImage () {     var img = new Image ();     img . onload = function () {         canvascontext . drawImage ( img , 0 , 0 , CANVAS_WIDTH , CANVAS_HEIGHT );     }     img . src = "../mn/1.jpg" ; } 
+ 
+ 
+跟 iOS 一致，都是需要获取当前绘图环境，比如此时为 2D 环境。 
+
+
+Canvas应用
+
+createJS
+
+HTML新添加的主体标签
+
+<article>文档标签，页面或应用程序中独立的，完整的，可以独自被外部引用的内容。 
+<section>元素用于对网站或应用程序中页面上的内容进行分块， 
+注意:1.不要讲section元素作为设置样式的页面容器 
+     2.如果article元素，aside元素、nav元素更符合使用条件，那不要使用section元素 
+     3.没有标题内容，不要使用section元素 
+<nav>导航元素，在HTML5中不要使用menu元素代替nav元素 
+<aside>表示当前或文章的附属信息部分，它可以包含于当前页面或主要内容相关的引用、侧边栏、广告、导航条 
+<time>显示时间信息的标签,这个是给机器阅读的 
+<pubdate>区分哪个时间为主 
+
+
+SVG
+
+SVG: 
+ 
+1. 什么是 SVG 
+1 ) .SVG 指可伸缩矢量图形（Scalable Vector Graphics) 
+2).SVG 用来定义用于网络的基于矢量的图形 
+3).SVG 使用 XML 格式定义图形 
+4).SVG 图像在放大或改变尺寸的情况下其图形质量不会有损失 
+5).SVG 是万维网联盟的标准 
+ 
+2.SVG的优势: 
+1):SVG图像可通过文本编辑器来创建和修改 
+2):SVG图像可被搜索、索引、脚本化或压缩 
+3).SVG是可伸缩的 
+4).SVG图像可在任何的分辨率下被高质量地打印 
+5).SVG可在图像质量不下降的情况下被放大 
+ 
+导入 svg 图片 
+< iframe src= "../resource/svg02.svg" frameborder= "0" width= "120" height= "120" ></ iframe > 
+
+
+Web存储
+
+客户端存储数据新方法 
+
+
+localStorage
+
+没有时间限制的数据存储(相当于磁盘存储)   
+ 
+javascript: localStorage 
+
+
+sessionStorage
+
+针对一个 session 的数据存储 ( 相当于内存存储 )  
+javascript: sessionStorage 
+ 
+存储特点 : 
+sessionStorage 方法针对一个session进行数据存储。当用户关闭浏览器窗口数据会被删除。 
+
+
+HTML5应用缓存和Web Workers
+
+1. 应用缓存 : 
+    HTML5 引入了应用程序缓存，这意味着 web 应用可以进行缓存，并在没有网络连接时进行访问 
+ 
+2. 应用缓存的优势： 
+    1）离线浏览-用户可在应用离线时使用它们 
+    2）速度-已缓存资源加载得更快 
+    3）减少服务器负载-浏览器将只从服务器下载更新过或未下载的资源 
+
+
+应用缓存
+
+3.实现缓存： 
+    如需启用应用程序缓存，请在文档的<html>标签中包含manifest属性。 
+    manifest文件的建议的文件扩展名是:".appcache" 
+ 
+4.Manifest文件: 
+    1)CACHE MANIFEST-在此标题下列出的文件将在首次下载后进行缓存 
+    2）NETWORK-在此标题下列出的文件需要与服务器的连接，而不会被缓存 
+    3）FALLBACK-在此标题下列出的文件规定当页面无法访问时的回退页面（比如404页面) 
+ 
+项目地址 : 
+/Users/zmj27404/WebstormProjects/learnjavascript/ 
+
+
+Web Workers
+
+1.Web Worker 
+     Web Worker 是运行在后台的javascript，独立于其他脚本，不会影响页面的性能 
+ 
+2.方法: 
+      postMessage()-它用于向HTML页面传回一般消息 
+     terminate()-终止web worker,并释放浏览器/计算机资源 
+ 
+3.事件: 
+     onmessage 
+ 
+ 
+实例代码: 
+function work () {     var work = new Worker( "../javascript/count.js" );     work . onmessage = function (e) {         numDiv . innerHTML = e. data ;     } } 
+ 
+需要注意： new Worker("../javascript/count.js") 的路径是相对于调用它的html文件 
+ 
+ 
+count.js var num = 0 ; function count () {     postMessage( num );     num ++;     setTimeout (count , 1000 ); }  count (); 
+
+
+HTML5服务器推送事件
+
+介绍
+
+1.介绍： 
+服务器推送事件 (Server-sent Events) 是 HTML5 规范中的一个组成部分，可以用来从服务器实时推送数据到浏览器端 
+ 
+2. 传统的服务器端推送数据技术： 
+     WebSocket:Web 端的 socket 通讯 
+
+
+实现
+
+php 服务器 : 
+<?php /**   * Created by PhpStorm.   * User: zmj27404   * Date: 10/5/16   * Time: 6:46 PM   */  header ( 'Content-Type: text/event-stream' ) ; header ( 'Cache-Control: no-cache' ) ; // 建议不要缓存 SSE 数据   /**   * Constructs the SSE data format and flushes that data to the client.   *   * @param string $id Timestamp/id of this connection.   * @param string $msg Line of text that should be transmitted.   */ date_default_timezone_set ( "Asia/ShangHai" ) ; function sendMsg ( $id , $msg ) {      echo "id: $id " . PHP_EOL ;     echo "data: $msg " . PHP_EOL ;     echo PHP_EOL ;     ob_flush () ;     flush () ; }   $serverTime = time () ;  for ( $i = 0 ; $i < 100 ; $i ++ ) {      sendMsg ( $serverTime , 'server time: ' . date ( "h:i:s" , time ())) ;     sleep ( 1 ) ; } 
+ 
+ 
+html ： 
+/**   * Created by zmj27404 on 10/5/16.   */  var status ; var recevie ; var SERVER_URL = "./index.php" ; var es ; window . onload = function () {     status = document . getElementById ( "statusDiv" );     recevie = document . getElementById ( "resvDiv" );      status . innerHTML = "Connect Server" ;     startListenServer (); }  function startListenServer () {     status . innerHTML = "Connect Server ..." ;     es = new EventSource( SERVER_URL );     es . onopen = openHandler ;     es . onerror = errorHandler ;     es . onmessage = receviceHandler ;      readState (); }  function readState () {     console . log ( es . readyState );     setTimeout (readState , 1000 ); }  function openHandler () {     status . innerHTML = "Open Service" ; }  function receviceHandler (e) {     recevie . innerHTML = e. data ; }  function errorHandler (e) {     status . innerHTML = "Error" ; }  
+
+
+响应式布局
+
+1.一个网站兼容多个终端，PC，iOS，Andr 
+ 
+2.优缺点: 
+     优点：1）：面对不同分辨率设备灵活性强 
+            2）：能够快捷解决多设备显示适应问题 
+     缺点：1）：兼容各种设备工作量大，效率低下 
+          2）：代码累赘，会出现隐藏无用的元素，加载时间过长 
+
+
+基本实现
+
+1.CSS 中的 Media Query( 媒介查询）： 
+     设备宽高 :device-width,device-height 
+     渲染窗口的宽和高： width ， height 
+     设备的手持方向： orientation 
+     设备的分辨率： resolution 
+ 
+2. 使用方法： 
+     外联 
+     内嵌样式 
+
+
+Bootstrap
+
+Bootstrap 框架 
+ 
+Bootstrap CSS 、组件与 JavaScript 
+ 
+ 
+Bootstrap: 简洁，直观，强悍的前端开发框架，让web开发更迅速，简单 
+优点：快速，简单，灵活的栅格系统，小而强大，响应式布局，跨平台等。 
+ Bootstrap很强大，前端工程师都需要学习这个CSS框架 
+ 
+bootstrap文档地址： 
+http://www.bootcss.com/ 
+
+
+jQuery
+
+jQuery基础
+
+简介
+
+jQuery: 可以通过一行简单的标记被添加到网页中 
+ 
+jQuery是一个JavaScript函数库 
+ 
+功能： 
+     HTML元素选取 
+     HTML元素操作 
+     CSS操作 
+     HTML事件函数 
+     JavaScript特效和动画 
+     HTML DOM遍历和修改 
+     AJAX 
+     Utilies     工具类 
+
+
+语法
+
+1.jQuery 语法 : 
+     基础语法 :$(selector).action() 
+     美元符号定义 jQuery 
+     选择符 (selector)" 查询 " 和 " 查找 "HTML 元素 
+      jQuery 的 action （）执行对元素的操作 
+     例如: 
+          $(this).hide()-隐藏当前元素 
+          $("p").hide()-隐藏所有段落 
+ 
+     中文地址:http://www.jquery123.com/ 
+
+
+选择器
+
+jQuery 选择器 : 
+$ ( document ). ready ( function () {     $ ( "button" ). click ( function () {        $ ( "#pid" ). text ( "p 元素被修改 " );         $ ( ".pid" ). text ( 'p1 元素被修改 ' );     }); }) 
+ 
+不清楚的地方查看 API 
+
+
+事件
+
+常用事件方法 
+绑定事件 
+解除绑定事件 
+事件的目标 
+事件的冒泡 
+自定义事件 
+
+
+效果
+
+1. 隐藏和显示 
+ 
+2. 淡入/淡出 
+ 
+3.滑动 
+ 
+4.动画 
+ 
+5.停止动画 
+ 
+6.Callback 
+ 
+7.Chaining 
+
+
+jQuery HTML DOM操作
+
+jQuery 捕获 
+ 
+ 
+设置 DOM 
+html,text,val,function 
+ 
+添加DOM 
+append,after,before 
+ 
+删除 DOM 
+remove (清除标签) , empty( 子元素） 
+
+
+CSS盒子模型
+
+元素遍历
+
+1. 子元素遍历 
+ 
+2. 父元素遍历 
+ 
+3. 同级元素遍历 
+ 
+4.元素过滤 
+
+
+Ajax
+
+Ajax 异步回调方法： 
+     异步加载数据 
+ 
+异步访问 get, getScript, getJSON, load, post 
+
+
+jQuery扩展
+
+ 
+ 
+$.noConflict(); 
+消除$,不能使用$,使用jQuery 
+ 
+var myjq = $.noConflict(); 
+使用myjq代替jQuery 
+
+
+jQuery瀑布流
+
+jQuery UI基础
+
+下载与使用
+
+1.jQuery UI: 
+     是以 jQuery 为基础的 JavaScript 网页用户界面的开源库。包含底层用户交互、动画、特效和可更换主题的可视控件。我们可以直接用它来构建具有很好交互性的 web 应用程序。 
+ 
+2.jQuery UI: 
+     包含了许多维持状态的小部件 (Widget), 因此，它与典型的 jQuery 插件使用模式略有不同。所有的 jQuery UI 小部件 (Widget) 使用相同的模式，所以，只要您学会使用其中一个，您就知道如何使用其他的小部件(Widget). 
+ 
+3.jQuery UI: 
+     IE6.0+, Firfox3+, Safaria 3.1+, Opera9.6+, 和Google Chrome. 
+ 
+4.jQuery UI主要分为3各部分：交互，小部件和效果库 
+     a):交互 
+     交互部件是一些与鼠标交互相关的内容，包括Draggable, Droppable, Resizable,Selectable 和Sortable等 
+ 
+     b):小部件 
+     主要是一些界面的扩展，包括AutoComplete,ColorPicker,Dialog,Slider, Tabs, ProgressBar, Spinner等 
+     c):效果 
+     用于提供丰富的动画效果，包括:Add Class, Color Animation, Toggle等 
+
+
+Interaction
+
+1.Draggable 拖拽 
+ 
+2.Droppable 拖拽填充 
+$ ( "#div01" ). draggable (); $ ( "#div02" ). droppable ({     drop : function (event,ui){         $ ( "#div02" ). text ( "drop 事件 " );     },     out : function (event,ui) {         $ ( "#div02" ). text ( "out 事件 " );     } }); 
+ 
+3.Resizeable 尺寸变换 
+ 
+ 
+4.selectable 选中 
+ 
+5.sortable 排序     
+ 
+// 3. 调整尺寸大小，常用在文字编辑  $ ( "#div03" ). resizable ();  // 4. 选中效果  $ ( "#btn" ). button (); $ ( "#select" ). selectable (); $ ( "#btn" ). on ( "click" , function () {     if ( $ ( "#right" ). hasClass ( "ui-selected" )){         alert ( " 恭喜你答对了 " );     } });  // 5. 交换 ul 中 li 元素，像操作 iOS 中 UITableView $ ( "#sortable" ). sortable (); 
+ 
+ 
+
+
+Widget
+
+UI Widgets: 控件（ UIView) 
+ 
+1.Accordion 
+ 
+2.Autocomplete 
+ 
+3.Button 
+ 
+4.Datepicker 
+ 
+5.Dialog 
+ 
+6.Menu 
+ 
+7.Slider 
+ 
+8.Spinner 
+ 
+9.tabs 标签 
+
+
+Mobile
+
+jQuery Mobile  
+ 
+Widget:  
+ 
+1. 页面切换   
+ 
+ 
+2.Button  
+ 
+3.Checkboxradio  
+ 
+4.Collapsible  
+ 
+5.Controlgroup  
+ 
+查看 Mobile Demo 进行学习，需要调整样式才能达到要求 
+
+
+CreateJS
