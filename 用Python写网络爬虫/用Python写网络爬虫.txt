@@ -1,0 +1,347 @@
+﻿用Python写网络爬虫
+
+网络爬虫简介
+
+背景调研
+
+检查robots.txt
+
+检查网站地图
+
+估算网站大小
+
+上 Google 查询该站的网页大小 
+
+
+识别网站所用技术
+
+pip install builtwith 
+
+
+寻找网站所有者
+
+pip install python-whois 
+
+
+编写第一个网络爬虫
+
+下载网页
+
+import requests 
+response = requests.get("http://www.baidu.com") 
+
+
+网站地图爬虫
+
+通过获取某个网络文件中的内容，进行正则表达式匹配 
+
+
+ID遍历爬虫
+
+对于分页内容 URL ，可以采用对 ID 进行遍历 
+
+
+链接爬虫
+
+其实质就是通过链接中的内容分析 URL ，在进行链接爬虫 
+
+
+数据抓取
+
+分析网页
+
+Chrome: 自带页面分析工具 
+FireFox: Firebug 
+
+
+三种网页抓取方式
+
+正则表达式
+
+通过正则表达式匹配相应的内容 
+
+
+Beautiful Soup
+
+pip install beautifulsoup4 
+
+
+Lxml
+
+安装指南 :http://Lxml. 
+
+
+性能对比
+
+ 
+抓取方法 
+性能 
+使用难度 
+安装难度 
+正则表达式 
+快 
+困难 
+简单(内置模块) 
+Beautiful Soup 
+慢 
+简单 
+简单 ( 纯 Python) 
+Lxml 
+快 
+简单 
+相对困难 
+ 
+
+
+下载缓存
+
+为链接爬虫添加缓存支持
+
+磁盘缓存
+
+#!/usr/bin/env python # -*- coding: utf-8 -*-  import os import re from urllib import parse import pickle import zlib from datetime import datetime,timedelta  DiskCache_Max_Length = 1000 class DiskCache:     """     硬盘缓存 , 存在的问题就是文件名出现重名导致部分网页不能显示完全 , 这样出现的 bug 也不太寻找      """     def __init__ ( self , cache_file= 'cache' , max_length=DiskCache_Max_Length, expire=timedelta( days = 30 )):         self .cache_file = cache_file         self .max_length = max_length         self .expire = expire      def url_to_path( self , url):         """         对 URL 对应的本地缓存文件名字进行限制          :param url: URL 路径地址          :return : 相对应的缓存文件名          """         components = parse.urlsplit(url)         path = components.path         if not path:             path = '/index.html'         elif path.endswith( '/' ):             path += 'index.html'         elif path.find( '.' ) == - 1 :             # 判断是否有后缀名 , 没有先添加上 , 否则与目录重名导致文件不能创建              path += '.html'         filename = components.netloc + path + components.query          filename = re.sub( '[^/0-9a-zA-Z\-.,;_ ]' , '_' , filename)         #restrict maximum number of characters         filename = '/' .join(segement[: 255 ] for segement in filename.split( '/' ))         filePath = os.path.join(os.path.dirname(__file__), self .cache_file, filename)         return filePath      def __getitem__ ( self , url):         """         获取 url 对应文件内容          :param url: URL 地址          :return : 返回该 URL 对应的本地缓存文件内容          """         path = self .url_to_path(url)         if os.path.exists(path):             with open (path, 'rb' ) as fp:                 result, timestamp = pickle.loads(zlib.decompress(fp.read()))                 if self .has_expire(timestamp):                     raise KeyError (url + ' does not exist' )                 return result         else :             #URL has not yet been cached             raise KeyError (url+ ' does not exist' )      def __setitem__ ( self , url, result):         """         这个就相当于字典中的 setObjectForKey         :param url: URL 地址          :param result: URL 对应的网络文件内容 , 采用 pickle 归档的方式进行打包存储 , 并对打包后的二进制进行压缩处理          :return : None         """         path = self .url_to_path(url)         folder = os.path.dirname(path)         if not os.path.exists(folder):             os.makedirs(folder)         with open (path, 'wb' ) as fp:             fp.write(zlib.compress(pickle.dumps((result, datetime.utcnow()))))      def has_expire( self , timestamp):         """         判断 timestamp 时间戳是否过期          :param timestamp: 当前时间戳          :return : 返回 true/false         """         return datetime.utcnow() > (timestamp + self .expire) 
+
+
+实现
+
+缓存测试
+
+节省磁盘空间
+
+清理过期数据
+
+缺点
+
+数据库缓存
+
+#!/usr/bin/env python # -*- coding: utf-8 -*-  from pymongo import MongoClient import pickle import zlib from datetime import datetime, timedelta  class MongoDBCache:     """     MongoDB 文件数据库缓存 , 好处就是不用去关心文件名重名的 bug, 全部以 URL 进行更新 , 就和      字典一样 .     """     """     Wrapper around MongoDB to cache downloads      >>> cache = MongoCache()     >>> cache.clear()     >>> url = 'http://example.webscraping.com'     >>> result = {'html': '...'}     >>> cache[url] = result     >>> cache[url]['html'] == result['html']     True     >>> cache = MongoCache(expires=timedelta())     >>> cache[url] = result     >>> # every 60 seconds is purged http://docs.mongodb.org/manual/core/index-ttl/     >>> import time; time.sleep(60)     >>> cache[url]     Traceback (most recent call last):      ...     KeyError: 'http://example.webscraping.com does not exist'     """     def __init__ ( self , client=None , expires=timedelta( days = 30 )):         self .client = MongoClient( 'localhost' , 27017 )         self .db = self .client.cache         self .db.webpage.create_index( 'timestamp' , expireAfterSeconds =expires.total_seconds())      def __contains__ ( self , url):         try :             self [url]         except KeyError :             return False         else :             return True      def __getitem__ ( self , url):         record = self .db.webpage.find_one({ '_id' :url})         if record:             return pickle.loads(zlib.decompress(record[ 'result' ]))         else :             raise KeyError (url+ 'does not exist' )      def __setitem__ ( self , url, result):         record = { 'result' : bytes (zlib.compress(pickle.dumps(result))),                   'timestamp' :datetime.utcnow()}         self .db.webpage.update({ '_id' : url}, { '$set' : record}, upsert = True ) 
+
+
+NoSQL
+
+MongoDB
+
+brew install MongoDB 
+ 
+启动MongoDB 
+mongod --dbpath . 
+ 
+这个MongoDB不需要特定的表结构，表的字段是可变的 
+
+
+概述
+
+缓存实现
+
+压缩
+
+import zlib 
+zlib.compress(data) 
+
+
+缓存测试
+
+并发下载
+
+串行爬虫
+
+多线程爬虫
+
+#!/usr/bin/env python # -*- coding: utf-8 -*- from download import Downloader import threading import time from MongoQueue import MongoQueue import multiprocessing from urllib import parse from scrapeCallBack import ScrapeCallback from parse_links import *  # 线程休眠时间  SLEEP_TIME = 1 def threaded_crawler(seed_url, link_regex= '/view/' , max_depth = 2 , scrape_callback=None , mongoCache= False , max_threads= 10 , timeout=30 ):     # the queue of URL's that still need to be crawled     crawl_queue = MongoQueue()     crawl_queue.clear()     crawl_queue.push(seed_url)     # the URL's that have been seen     seen = set ([seed_url])     seen_depth = {}     D = Downloader( delay = 0 , num_retries = 3 , mongoCache =mongoCache)     def process_queue():         while True :             try :                 url = crawl_queue.pop()             except KeyError :                 # crawl queue is empty                 break             else :                 html = D(url)                 depth = 0                 if url in seen_depth:                     depth = seen_depth[url]                 if depth != max_depth:                     links = get_links(html)                     for link in links:                         # add this new link to queue                         if re.match(link_regex, link):                             link = parse.urljoin(seed_url, link)                             if link not in seen_depth:                                 seen_depth[link] = depth + 1                                 crawl_queue.push(normalize(seed_url, link))                 crawl_queue.complete(url)      threads = []     while threads or crawl_queue:         # the crawl is still active         for thread in threads:             if not thread.is_alive():                 # remove the stopped threads                 threads.remove(thread)         while len (threads) < max_threads and crawl_queue.peek():             # can start some more threads             thread = threading.Thread( target =process_queue)             # set daemon so main thread can exit when receives ctrl-c             thread.setDaemon( True )             thread.start()             threads.append(thread)         # all threads have been processed         # sleep emporarily so CPU can focus execution elsewhere         time.sleep(SLEEP_TIME)  def process_link_crawler(args, **kwargs):     """     多个进程调度多个线程 , 根据硬件 CPU 来配置      :param args: 参数      :param kwargs: 关键字参数      :return :     """     num_cpus = multiprocessing.cpu_count()     print ( 'Starting {} process' .format(num_cpus))     processes = []     for i in range (num_cpus):         p = multiprocessing.Process( target =threaded_crawler, args =[args], kwargs =kwargs)         p.start()         processes.append(p)     # wwait for processes to complete         for p in processes:             p.join()  def normalize(seed_url, link):     """Normalize this URL by removing hash and adding domain     """     link, _ = parse.urldefrag(link) # remove hash to avoid duplicates     return parse.urljoin(seed_url, link) 
+
+
+1.线程和进程如何工作
+
+2.实现
+
+3.多线程爬虫
+
+性能
+
+动态内容
+
+对动态内容进行逆向工程
+
+chrome 采用检查（ inspect) 对结果进行观察，网络请求采用 network 进行查看， 
+Firefox 采用 firebug 进行查看。 
+ 
+对于接口，采用 requests 最好了 
+如 : 
+import requests 
+jsonData = requests.get(url).json() 
+
+
+渲染动态网页
+
+PyQt5 
+需要安装 Qt5:http://download.qt.io/official_releases/online_installers/qt-unified-mac-x64-online.dmg 
+ 
+ 
+PySide (only these python versions are supported: [(2, 6), (2, 7), (3, 2), (3, 3), (3, 4)]) 
+ 
+ 
+
+
+PyQt还是PySide
+
+执行Javascriipt
+
+使用WebKit与网站交互
+
+Selenium
+
+表单交互
+
+登录表单
+
+使用 requests 
+
+
+登录Cookie
+
+支持内容更新的登录脚本扩展
+
+使用Mechanize模块实现自动化表单处理
+
+python2.7 : mechanize 
+python3: mechanicalsoup 
+
+
+验证码处理
+
+注册账号
+
+光学字符识别
+
+需要先安装 
+brew install tesseract 
+github: 
+https://github.com/tesseract-ocr/tesseract 
+ 
+其次安装 
+pip install PIL 
+# pytesseract 是 tesseract 的 python 衔接库 
+pip install pytesseract 
+
+
+处理复杂验证码
+
+使用验证码处理服务
+
+9KW入门
+
+与注册功能集成
+
+Scrapy
+
+安装
+
+pip install Scrapy, 已经支持 python3 
+
+
+启动项目
+
+. 
+├ ── example 
+│   ├ ── __init__.py 
+│   ├ ── __pycache__ 
+│   ├ ── items.py     // 该文件定义了带抓取域的模型 
+│   ├ ── middlewares.py 
+│   ├ ── pipelines.py     // 处理要抓取的域 
+│   ├ ── settings.py     // 该文件定义了一些常量，如用户代理，爬取延时等 
+│   └── spiders     // 该目录存储实际的爬虫代码 
+│       ├ ── __init__.py 
+│       └── __pycache__ 
+└── scrapy.cfg     //设置项目配置 
+ 
+4 directories, 7 files 
+
+
+定义模型
+
+创建爬虫
+
+scrapy startproject example 
+cd example进行工作目录下 
+ 
+输入下面命令一定要在 example 目录下面 
+scrapy genspider country example.webscraping.com --template=crawl 
+ 
+测试爬虫 
+// crawl爬虫代理，country爬虫对应的模块，--output输出文件名字; -s LOG_LEVEL=INFO日志等级 
+scrapy crawl country --output=countries.csv -s LOG_LEVEL=INFO 
+
+
+使用Shell命令爬取
+
+scrapy shell http://example.webscraping.com/view/United-Kingdom-239 
+
+
+检查结果
+
+# -*- coding: utf-8 -*- import scrapy from scrapy.linkextractors import LinkExtractor from scrapy.spiders import CrawlSpider, Rule from ..items import ExampleItem  class CountrySpider(CrawlSpider):     # 爬虫名称的字符串      name = 'country'     # 可以爬取的域名列表 , 如果没有定义该属性 , 则表示可以爬取任何域名      allowed_domains = [ 'example.webscraping.com' ]     # 爬虫起始 URL 列表 , 不过 start_urls 的默认值与我们想要的不一样 , 在 allowed_domains 前加上 www 前缀      start_urls = [ 'http://example.webscraping.com/' ]     # 该属性为一个正则表达式集合 , 用于告知爬虫需要跟踪哪些链接      rules = (         # callback 函数 , 用于解析下载得到的相应          # allow 属性允许可以去爬虫的页面匹配 , 正则表达式          # deny 拒绝去爬虫的 /user/ 目录          Rule(LinkExtractor( allow = '/index/' , deny = '/user/' ), follow = True ),         Rule(LinkExtractor( allow = '/view/' , deny = '/user/' ), callback = 'parse_item' )     )      def parse_item( self , response):         """         从相应中获取数据          :param response: 响应数据          :return :         """         i = ExampleItem()         # 两种匹配模式 , 一种是 css, 另一种为 xpath         name_css = 'tr#places_country__row td.w2p_fw::text'         i[ 'name' ] = response.css(name_css).extract()         pop_css = 'tr#places_population__row td.w2p_fw::text'         i[ 'population' ] = response.css(pop_css).extract()         return i 
+
+
+中断与恢复爬虫
+
+scrapy crawl country -s LOG_LEVEL=DEBUG -s JOBDIR=crawls/country 
+
+
+使用Portia编写可视化爬虫
+
+详细安装详情 :  
+https://github.com/scrapinghub/portia#running-portia  
+ 
+https://hub.docker.com/r/scrapinghub/portia-on-dash/   
+ 
+先要安装 docker-tools  
+https://www.docker.com/products/docker-toolbox   
+可以使用迅雷下载   
+ 
+其次安装 Portia ，就是最上面的 github 地址   
+ 
+然后使用 docker 进行安装，或者本地安装   
+需要先学习docker使用   
+ 
+ 
+或者直接使用vagrant进行安装，也就是虚拟机，这个安装其实就是在ubuntu16.04的基础上面进行更新，然后安装依赖库，   
+命令包括   
+vagrant up #这个是在当前目录下面有Vagrantfile进行VM配置   
+其次pip install是通过-r reqirement.txt进行批量安装依赖库，出现一个问题就全盘结束，最好就是一个一个来，或者几个一起来。   
+注意了vagrant box可以通过迅雷下载（https://atlas.hashicorp.com/ubuntu/boxes/trusty64/versions/20161214.0.1/providers/virtualbox.box）   
+ 
+install:http://portia.readthedocs.io/en/latest/installation.html   
+ 
+目前本地电脑上面在爬虫目录下已经可以使用portia进行测试 
+
+
+安装
+
+安装较复杂： 
+参考 http://portia.readthedocs.io/en/latest/installation.html 
+ 
+可以通过 vagrant,docker 进行安装， 
+或者在 vagrant 虚拟环境下进行本地安装 
+不知道为何用 vagrant up 老是出现问题，是因为网络环境不稳定吗？ 
+
+
+标注
+
+优化爬虫
+
+检查结果
+
+使用Scrapy实现自动化爬取
+
+In [1]: from scrapely import Scraper 
+ 
+In [2]: s = Scraper() 
+ 
+In [3]: train_url = 'http://example.webscraping.com/view/Afghanistan-1' 
+ 
+In [4]: s.train(train_url, {'name': 'Afghanistan', 'population': '29,121,286'}) 
+ 
+In [5]: test_url = 'http://example.webscraping.com/view/United-Kingdom-239' 
+ 
+In [6]: s.scrape(test_url) 
+Out[6]: [{'name': ['United Kingdom'], 'population': ['62,348,447']}] 
